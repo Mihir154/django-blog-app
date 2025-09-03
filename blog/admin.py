@@ -5,6 +5,7 @@ from .models import Category, Blog
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'created_at', 'updated_at')
     ordering = ('name',)
+    list_display_links = ('name',)
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'category', 'author', 'status', 'is_featured', 'created_at', 'updated_at')
