@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Django Blog App{% endblock title %}
+
+{% block content %}
+
+<!-- <h1 class="mt-4" style="color: #ffc107;">Dashboard</h1>
+<p>Welcome to the dashboard! Here you can manage your blog posts and view statistics.</p> -->
+
+<div class="row">
+    <!-- Left Sidebar -->
+    <div class="col-md-3">
+        <div class="nav flex-column nav-pills" bg-light aria-orientation="vertical">
+            <a href="" class="nav-link text-dark bg-warning">Dashboard</a>
+            <a href="">Categories</a>
+            <a href="">Posts</a>
+            <a href="">Logout</a>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+     <div class="col-md-9">
+        <div class="row">
+            <div class="col">
+                <div class="card border-default mb-3">
+                    <div class="card-header text-center text-uppercase font-weight-bold">
+                        <h3 class="text-dark">All Categories</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="cart-title text-center">{{ catcnt }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-default mb-3">
+                    <div class="card-header text-center text-uppercase font-weight-bold">
+                        <h3 class="text-dark">All Posts</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="cart-title text-center">{{ blogcnt }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+{% endblock content %}

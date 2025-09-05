@@ -28,6 +28,7 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     path('category/', include('blog.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('search/', blog_views.blog_search, name='blog-search'),
     path('<slug:slug>/', blog_views.blog, name='blog-detail'),
 
