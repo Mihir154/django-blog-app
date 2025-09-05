@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Registration - Django Blog App {% endblock title %}
+
+{% block content %}
+
+<h1 class="text-center">Register</h1>
+
+{% load crispy_forms_tags %}
+
+<form method="post" style="width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Register">
+</form>
+
+{% endblock content %}
