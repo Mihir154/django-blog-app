@@ -1,16 +1,9 @@
 from django.shortcuts import render, redirect
 from blog.models import Blog
 from .forms import CustomUserCreationForm
-
-# def home(request):
-#     blogs = Blog.objects.filter(status="published").order_by("-created_at")
-#     featured_blogs = blogs.filter(is_featured=True)[:5]
-
-#     context = {
-#         "blogs": blogs,
-#         "featured_blogs": featured_blogs,
-#     }
-#     return render(request, "home.html", context)
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login, authenticate
+from django.contrib.auth import logout as auth_logout
 
 def home(request):
     blogs = Blog.objects.filter(status="published").order_by("-created_at")
@@ -28,10 +21,37 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("register")
+            return redirect("login")
     else:
         form = CustomUserCreationForm()
+
     context = {
         "form": form,
     }
     return render(request, "register.html", context)
+
+def login(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            # Log the user in
+            # user = form.get_user()
+
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(username=username, password=password)
+            auth_login(request, user)
+
+            return redirect("home")
+    else:
+        form = AuthenticationForm()
+
+    context = {
+        "form": form,
+    }
+    return render(request, "login.html", context)
+
+def logout(request):
+    auth_logout(request)
+    return redirect("home")
