@@ -19,9 +19,9 @@ def category_posts(request, category_id):
     return render(request, "category_posts.html", context)
 
 def blog(request, slug):
-    # blog = get_object_or_404(Blog, slug=slug, status="published")
+    blog = get_object_or_404(Blog, slug=slug, status="published")
 
-    # context = {
-    #     "blog": blog,
-    # }
-    return render(request, "blog_detail.html")
+    context = {
+        "blog": blog,
+    }
+    return render(request, "blog_detail.html", context)
