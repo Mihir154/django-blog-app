@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Category - Django Blog App{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <!-- Left Sidebar -->
+    {% include 'dashboard/leftsidebar.html' %}
+
+    <!-- Right Sidebar -->
+    <div class="col-md-9">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Updated At</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.created_at }}</td>
+                    <td>{{ category.updated_at }}</td>
+                    <td>
+                        <a href=""><i class="fa fa-edit text-success"></i></a>&nbsp;&nbsp;
+                        <a href=""><i class="fa fa-trash text-danger"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
