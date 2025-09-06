@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Django Blog - {{ blog.title }}{% endblock %}
+{% block title %}Django Blog | {{ blog.title }}{% endblock %}
 
 {% block content %}
     
@@ -17,7 +17,7 @@
                     <!-- Post meta content-->
                     <div class="text-muted fst-italic mb-2">Posted on {{ blog.created_at }} by {{ blog.author }}</div>
                     <!-- Post category-->
-                    <a class="badge bg-warning text-decoration-none text-light" href="#!">{{ blog.category }}</a>
+                    <a class="badge bg-warning text-decoration-none text-light" href="{% url 'category_posts' blog.category.id %}">{{ blog.category }}</a>
                 </header>
                 <!-- Preview image figure-->
                 <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog.image.url }}" alt="..." /></figure>
