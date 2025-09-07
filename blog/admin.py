@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Blog
+from .models import Category, Blog, Comment
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
@@ -16,5 +16,12 @@ class BlogAdmin(admin.ModelAdmin):
     list_editable = ('status', 'is_featured')
     prepopulated_fields = {'slug': ('title',)}
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'blog', 'created_at', 'updated_at')
+    list_display_links = ('user', 'blog')
+    search_fields = ('user__username', 'blog__title')
+    ordering = ('-created_at',)
+
 admin.site.register(Category, CategoryAdmin),
-admin.site.register(Blog, BlogAdmin)
+admin.site.register(Blog, BlogAdmin),
+admin.site.register(Comment, CommentAdmin)

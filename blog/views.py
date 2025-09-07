@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import Blog, Category
+from .models import Blog, Category, Comment
 
 def category_posts(request, category_id):
     # category = get_object_or_404(Category, id=category_id)
@@ -21,9 +21,26 @@ def category_posts(request, category_id):
 
 def blog(request, slug):
     blog = get_object_or_404(Blog, slug=slug, status="published")
+    comments = Comment.objects.filter(blog=blog).order_by("-created_at")
+    comment_count = comments.count()
+
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            body = request.POST.get("comment")
+            if body and body.strip():
+                Comment.objects.create(
+                    blog=blog,
+                    user=request.user,
+                    body=body.strip()
+                )
+                return redirect("blog-detail", slug=slug)
+        else:
+            return redirect("login")
 
     context = {
         "blog": blog,
+        "comments": comments,
+        "comment_count": comment_count,
     }
     return render(request, "blog_detail.html", context)
 

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Django Blog | {{ blog.title }}{% endblock %}
+{% block title %}{{ blog.title }} | Django Blog App{% endblock %}
 
 {% block content %}
-    
+
 <!-- Page content-->
 <div class="container mt-5">
     <div class="row">
@@ -17,7 +17,8 @@
                     <!-- Post meta content-->
                     <div class="text-muted fst-italic mb-2">Posted on {{ blog.created_at }} by {{ blog.author }}</div>
                     <!-- Post category-->
-                    <a class="badge bg-warning text-decoration-none text-light" href="{% url 'category_posts' blog.category.id %}">{{ blog.category }}</a>
+                    <a class="badge bg-warning text-decoration-none text-light"
+                        href="{% url 'category_posts' blog.category.id %}">{{ blog.category }}</a>
                 </header>
                 <!-- Preview image figure-->
                 <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog.image.url }}" alt="..." /></figure>
@@ -25,40 +26,40 @@
                 <section class="mb-5">
                     <p class="fs-5 mb-4">{{ blog.description }}</p>
                     <p class="fs-5 mb-4">{{ blog.body }}</p>
-
-                    <!-- Comments
-                    <h4>Comments({{ comment_count }})</h4>
-                    {% if comments %}
-                     {% for comment in comments %}
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text mb-0">{{ comment }}</p>
-                                <span>
-                                    <small>{{ comment.user }}</small>
-                                    <small>{{ comment.created_at | timesince }} ago</small>
-                                </span>
-                            </div>
-                        </div>
-                     {% endfor %}
-                    {% else %}
-                    No Comments Yet
-
-                    {% endif %}
-                    <div class="form-group">
-                        {% if user.is_authenticated %}
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <textarea name="comment" class="form-control" placeholder="Write your Comment"></textarea>
-                                <input type="submit" class="btn btn-primary mt-2">
-                            </div>
-                        </form>
-                        {% else %}
-                         <p>Please <span><a href="{% url 'login' %}">Login</a></span> to write a comment!</p>
-                         {% endif %}
-                    </div> -->
                 </section>
             </article>
+
+            <!-- Comments Section -->
+            <div class="mt-5">
+                <h3>{{ comment_count }} Comments</h3>
+                <hr>
+                {% for comment in comments %}
+                <div class="mb-4 border-bottom pb-2">
+                    <strong>{{ comment.user.username }}</strong>
+                    <small class="text-muted">on {{ comment.created_at|date:"F j, Y, g:i a" }}</small>
+                    <p class="mt-2">{{ comment.body }}</p>
+                </div>
+                {% empty %}
+                <p>No comments yet. Be the first to comment!</p>
+                {% endfor %}
+            </div>
+
+            <!-- Comment Form -->
+            <div class="mt-5 mb-4">
+                {% if user.is_authenticated %}
+                <h4>Leave a Comment</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea name="comment" class="form-control" rows="4" placeholder="Write your comment here..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+                {% else %}
+                <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+                {% endif %}
+            </div>
         </div>
         <!-- Side widgets-->
         <div class="col-lg-4">
@@ -72,10 +73,10 @@
                                 {% for category in categories %}
                                 <li><a href="{% url 'category_posts' category.id %}">{{ category.name }}</a></li>
                                 {% endfor %}
-                
+
                             </ul>
                         </div>
-    
+
                     </div>
                 </div>
             </div>
